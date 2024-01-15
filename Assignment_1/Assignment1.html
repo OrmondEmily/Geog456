@@ -21,12 +21,30 @@
 
     }
 
+    .daBlueBox {
+        position: absolute;
+        top: 25%;
+        left: 25%;
+        width: 50%;
+        height: 50%;
+        background-color: dodgerblue;
+
+
+    }
+
+    h1 {
+        position: relative;
+        text-align: center;
+        top: 25%;
+
+    }
+
 </style>
 
 <body>
     <div id="daRedBox">
-        <div class="daBlueBox">
-            <h1>Click Here!</h1>
+        <div onclick="console.log('the div was clicked!')" class="daBlueBox">
+            <h1 onclick="alert('Hello There!')">Click Here!</h1>
         </div>
     </div>
 </body>
