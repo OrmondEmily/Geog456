@@ -26,7 +26,8 @@ crossorigin=""></script>
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
-    var damarker = L.marker([35.907544507864856, -79.05169486999512]).addTo(map);
+    var daMarker = L.marker([35.907544507864856, -79.05169486999512]).addTo(map);
+    daMarker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
 
     </script>
 
