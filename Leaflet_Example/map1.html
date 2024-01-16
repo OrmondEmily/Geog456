@@ -17,20 +17,16 @@ crossorigin=""></script>
 <style>
     #mapi {height: 500px; width: 500px;}
 </style>
-lat
-: 
 
-lng
-: 
--0.08995056152343751
 <body>
     <div id="mapi"></div>
     <script>
-        var map = L.map('mapi').setView([39, -79], 18);
+        var map = L.map('mapi').setView([35.907544507864856, -79.05169486999512], 13);
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
+    var damarker = L.marker([35.907544507864856, -79.05169486999512]).addTo(map);
 
     </script>
 
