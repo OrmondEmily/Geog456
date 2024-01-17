@@ -21,12 +21,12 @@ crossorigin=""></script>
 <body>
     <div id="map"></div>
     <script>
-        var map = L.map('map').setView([35.907544507864856, -79.05169486999512], 13);
+        var map = L.map('map').setView([35.6733346069195,-80.9300994873047], 13);
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
-    var daMarker = L.marker([35.672183925100896, -80.93260449697861]).addTo(map);
+    var daMarker = L.marker([35.6733346069195,-80.9300994873047]).addTo(map);
     daMarker.bindPopup("<b>Lake Norman State Park</b><br>This is my favorite place to walk my dog").openPopup();
 
     </script>
