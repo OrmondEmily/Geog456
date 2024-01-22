@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        function myFunction() {
+          document.getElementById("demo2").innerHTML = "Paragraph changed.";
+        }
+        </script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+Part 1
+    <!-- The website originally shows the p text. The getElementById takes the demo id and chnages it. 
+'Hello Javascript' can also be in single quotes -->
+    <p id="demo">Example of Javascript changing HTML</p>
+    <button onclick='document.getElementById("demo").innerHTML = "Hello Javascript"'> Click Me! </button>
+ <!--You can also make the source an image-->
+    <button onclick="document.getElementById('myImage').src='pic_bulbon.webp'">Turn on Light</button>
+    <img id="myImage" src="pic_bulboff.webp" style="width:100px">
+    <button onclick="document.getElementById('myImage').src='pic_bulboff.webp'">Turn off Light</button>
+<!--The font can also be changed-->
+    <button type="button" onclick="document.getElementById('demo').style.fontSize='35px'">Click Me to Change Font Size!</button>
+<!-- Java can also be used to hide elements-->
+    <button type="button" onclick="document.getElementById('demo').style.display='none'">Click Me to remove the text!</button>
+<!-- You can show hidden elements too -->
+    <button type="button" onclick="document.getElementById('demo').style.display='block'">Click Me to restore the text!</button>
+<br> Part 2 
+<!-- In HTML, JavaScript code is inserted between <script> and </script> tags-->
+<p id="demo1"></p>
+<script> document.getElementById("demo1").innerHTML = "My First JavaScript";</script>
+
+<!-- A JavaScript function is a block of JavaScript code, that can be executed when "called" for.
+For example, a function can be called when an event occurs, like when the user clicks a button.
+Scripts can be placed in the head or the body-->
+<!-- I edited the head of this html document-->
+<p id="demo2">A Paragraph</p>
+<button type="button" onclick="myFunction()">Try it out</button>
+
+<h2>Demo JavaScript in Body</h2>
+
+<p id="demo3">A Different Paragraph</p>
+
+<button type="button" onclick="myFunction()">Try it</button>
+
+<script>
+function myFunction() {
+  document.getElementById("demo3").innerHTML = "Paragraph changed.";
+}
+</script>
+<!-- Scripts can also come from outside files. Javascript files are named .js-->
+<br> Part 3
+<!-- Writing into an HTML element, using innerHTML.
+Writing into the HTML output using document.write().
+Writing into an alert box, using window.alert().
+Writing into the browser console, using console.log().
+-->
+
+<!-- The .innerHTML tells you what is in the content-->
+<p>My First Paragraph</p>
+<p id="demo4"></p>
+<script>
+document.getElementById("demo4").innerHTML = 5 + 6;
+</script>
+
+<!-- document write is used ONLY for testing purposes-->
+<script>
+    document.write(5 + 6);
+</script>
+<button type="button" onclick="document.write(5 + 6)">Try it</button>
+
+<script>window.alert(5+6);</script>
+
+<!-- using the term window is not necessary for example: -->
+
+<script>
+    alert(5 + 6);
+</script>
+
+<!-- console.log() is used for debugging -->
+<script>
+    console.log(5+6);
+</script>
+
+<!-- window.print is used to print contents of the current window-->
+<button onclick="window.print()">Print this page!!!!</button>
+
+<br> Part 4
+<!-- Each instruction is called a statement-->
+
+<script>
+    document.getElementById("demo").innerHTML = "Hello Dolly.";
+</script>
+<!--Semicolons separate JavaScript statements.-->
+<script> let a, b, c;
+    a = 5;
+    b = 6;
+    c = a + b
+</script>
+</body>
+</html>
