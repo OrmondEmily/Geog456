@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment 2</title>
+</head>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+<style>
+    #map { height: 500px; width: 800px; }
+</style>
+<body>
+    <a href="https://en.wikipedia.org/wiki/Hurricane_Elsa"><h1>Storm Elsa</h1></a>
+    <div id="map"></div>
+    <script src="ELSA.js"></script>
+<script>
+    var map = L.map('map').setView([30, -50], 3);
+    var OSM = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 19,
+                        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                    }).addTo(map);
+    var Esri_OceanBasemap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}', {
+	                    attribution: 'Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri',
+	                    maxZoom: 13
+                    }).addTo(map);
+
+    var geojsonMarkerOptions = {
+        radius: 8,
+        fillColor: "#FF4B12",
+        color: "#000",
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.8
+    };
+
+    var stormPoints = L.geoJSON(stormPoints, {
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, geojsonMarkerOptions);
+        }
+    }).addTo(map);
+    
+    var landMarker = L.marker([35.5, -79.0]).addTo(map);
+    landMarker.bindPopup("Storm Elsa Lands in North Carolina");
+
+    var baseMaps = {
+    "OpenStreet Map": OSM,
+    "Esri Ocean Base Map": Esri_OceanBasemap
+    };
+
+    var overlayMaps = {
+    "Storm Points": stormPoints,
+    "Landing Marker": landMarker
+    }; 
+
+    var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+</script>
+<img src="Elsa_2021-07-02_1725Z.jpg">
+</body>
+</html>
