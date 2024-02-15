@@ -14,25 +14,20 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            background-color: #668F80;
-            font-family: 'Palatino', sans-serif;
         }
 
         button {
             font-size: 18px;
-            background-color: #A0AF84;
-            color: #4A6670;
         }
     </style>
     
-    <a>
-        <script> myCoordinates = data.map(e=>[e.latitude, e.longitude]) </script>
 
-        <button onclick = "console.log(myCoordinates)"><h2>Click Here For Coordinates</h2>
-        </button> 
+    <script> myCoordinates = data.map(e=>[e.latitude, e.longitude]) </script>
+
+    <button onclick = "console.log(myCoordinates)"><h2>Click Here For Coordinates</h2>
+    </button> 
         
-    </a>
+
     
 </body>
 </html>
