@@ -3,15 +3,18 @@
 <head>
 <style>
 table {
-  font-family: arial, sans-serif;
+  font-family: Tahoma, sans-serif;
   border-collapse: collapse;
   width: 100%;
+  border-radius: 8px; 
+  overflow: hidden; 
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 td, th {
   border: 1px solid #dddddd;
   text-align: left;
-  padding: 8px;
+  padding: 10px;
 }
 
 tr:nth-child(even) {
@@ -19,48 +22,46 @@ tr:nth-child(even) {
 }
 </style>
 </head>
+<script src="Data.js"></script>
 <body>
 
-<h2>HTML Table</h2>
+<h2 style="font-family: 'Verdana', sans-serif; color: #007acc;" >United States Hydropower Plants</h2>
+<h4 style="font-family: 'Verdana', sans-serif; color: #3498db;">The average energy prodcued by all the listed hydropower plants in 2019 was 39.7 GWh (gigawatt hours). Those in yellow generated more than that and those in grey generated less than that</h4>
 
-<table>
+<table id="mytable">
   <tr>
-    <th>Company</th>
-    <th>Contact</th>
-    <th>Country</th>
+    <th>Name</th>
+    <th>Power Generated in 2019 (in GWh)</th>
   </tr>
-  <tr>
-    <td>Alfreds Futterkiste</td>
-    <td>Maria Anders</td>
-    <td>Germany</td>
-  </tr>
-  <tr>
-    <td>Centro comercial Moctezuma</td>
-    <td>Francisco Chang</td>
-    <td>Mexico</td>
-  </tr>
-  <tr>
-    <td>Ernst Handel</td>
-    <td>Roland Mendel</td>
-    <td>Austria</td>
-  </tr>
-  <tr>
-    <td>Island Trading</td>
-    <td>Helen Bennett</td>
-    <td>UK</td>
-  </tr>
-  <tr>
-    <td>Laughing Bacchus Winecellars</td>
-    <td>Yoshi Tannamuri</td>
-    <td>Canada</td>
-  </tr>
-  <tr>
-    <td>Magazzini Alimentari Riuniti</td>
-    <td>Giovanni Rovelli</td>
-    <td>Italy</td>
-  </tr>
+  
 </table>
+</script>
+
+<script>
+  var x = document.getElementById('mytable')
+  
+  for (var i =0; i <data.length; i++){
+    var myNewRow = document.createElement('tr');
+    var myNewCell1 = document.createElement('td');
+    var myNewCell2 = document.createElement('td');
+
+    myNewCell1.innerHTML = data[i].name;
+    myNewCell2.innerHTML = data[i].generation_gwh_2019;
+
+    if(data[i].generation_gwh_2019 > 39.7 ){ myNewCell2.style.backgroundColor = 'yellow'}
+    if(data[i].generation_gwh_2019 < 39.7 ){ myNewCell2.style.backgroundColor = 'grey'}
+
+    myNewRow.append(myNewCell1);
+    myNewRow.append(myNewCell2);
+    x.append(myNewRow);
+
+  } // The loop ends 
+ 
+</script>
 
 </body>
+
+
 </html>
+
 

@@ -31,16 +31,29 @@
     <div id="container"></div>
 
     <script>
+        // var objectsArray = [
+        //     { value: 10, color: "red", class: "a" },
+        //     { value: 20, color: "blue", class: "b" },
+        //     { value: 25, color: "#FFDB58", class: "a" },
+        //     { value: 60, color: "#33CC33", class: "b" },
+        //     { value: 61, color: "#FF4500", class: "a" },
+        //     { value: 62, color: "#FFFF00", class: "b" },
+        //     { value: 63, color: "#FF6347", class: "a" },
+        //     { value: 64, color: "#800080", class: "b" },
+        //     { value: 99, color: "#FFD700", class: "a" },
+        //     { value: 100, color: "#4B0082", class: "b" }
+        // ];
+
         var objectsArray = [
             { value: 10, color: "red", class: "a" },
             { value: 20, color: "blue", class: "b" },
-            { value: 25, color: "#FFDB58", class: "a" },
-            { value: 60, color: "#33CC33", class: "b" },
-            { value: 61, color: "#FF4500", class: "a" },
-            { value: 62, color: "#FFFF00", class: "b" },
-            { value: 63, color: "#FF6347", class: "a" },
-            { value: 64, color: "#800080", class: "b" },
-            { value: 99, color: "#FFD700", class: "a" },
+            { value: 30, color: "#FFDB58", class: "a" },
+            { value: 40, color: "#33CC33", class: "b" },
+            { value: 50, color: "#FF4500", class: "a" },
+            { value: 60, color: "#FFFF00", class: "b" },
+            { value: 70, color: "#FF6347", class: "a" },
+            { value: 80, color: "#800080", class: "b" },
+            { value: 90, color: "#FFD700", class: "a" },
             { value: 100, color: "#4B0082", class: "b" }
         ];
 
@@ -50,7 +63,7 @@
         // These are examples of color scales that can be generated with chroma
         // var colorScale = chroma.scale(['blue','red']).colors(3); //   this chroma method just creates an array with three colors in a gradient from blue to red
 
-        // var colorScale = chroma.scale(['blue','red']).domain([10, 100]); // this chroma method creates a function that returns a value within a gradient from blue to red when given a value between 10 to 100
+        var colorScale = chroma.scale(['blue','red']).domain([10, 100]); // this chroma method creates a function that returns a value within a gradient from blue to red when given a value between 10 to 100
         
         // var colorScale = chroma.scale(['blue','red']).domain([10, 100]).classes(chroma.limits(data, 'e', 4)); // e is for equal, q for quantile, // this chroma method creates a function returning a value in a gradient from blue to red, and creates 4 classes based on equal interval. 
 
