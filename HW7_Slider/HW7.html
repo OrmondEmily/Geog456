@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+    <title>Homework 7: Temporal Component Controlled by a Slider</title>
+    <script src="./redownloading_data/Data.js"></script>
+</head>
+
+<style> 
+    #map { height: 500px; width: 800px; margin: 0 auto;} 
+    #title {padding: 30px; 
+            text-align: center; 
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            background: rgb(64, 107, 141); 
+            color: white; 
+            font-size: 30px;}
+    #timeSlider {-webkit-appearance: none; 
+                width: 50%;
+                height: 15px;
+                border-radius: 5px;  
+                background: #d3d3d3;
+                outline: none;
+                opacity: 0.7;
+                -webkit-transition: .2s;
+                transition: opacity .2s;
+                margin-left: 25%;
+                margin-right: 25%;
+                margin-bottom: 30px;
+            }
+    #year { text-align: center;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ;
+            color: azure;}
+    body {
+    background-color: cadetblue; 
+    margin: 0; 
+    padding: 0;}
+    
+</style>
+
+
+<body>
+    <h1 id ="title"> United States Hydropower Plants</h1>
+
+    <h3 id ="year">Year</h3>
+    <input id="timeSlider" type = "range" name = "Test" min = "2013" max = "2019" oninput="timeSlider(this.value)">
+    <div id="map"></div>
+    <script>
+        var map = L.map('map').setView([39.8283, -98.5795], 4); 
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', 
+        {maxZoom: 19, attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(map);
+
+        var hydroplant = L.icon({
+            iconUrl: './hydropower.png' ,
+            popupAnchor: [0,0],
+            iconSize: [15,15]
+            
+        })
+
+        var geojsonLayer = null;
+
+        function timeSlider(value) {
+            console.log(data.features[value]);
+            document.getElementById('year').innerHTML = 'Year: ' + value;
+
+            if (geojsonLayer) {
+                map.removeLayer(geojsonLayer);
+            }
+
+            geojsonLayer = L.geoJson(data.features, {
+            pointToLayer: function(feature, latlng){
+            var yearData = feature.properties[value]; 
+            
+            if (yearData !== null)  { 
+                var popupContent = `Power Plant at (${feature.geometry.coordinates[1]}, ${feature.geometry.coordinates[0]}) produced ${yearData} gwh of energy in ${value}`;
+                var marker = L.marker(latlng, {icon: hydroplant}); 
+                marker.bindPopup(popupContent);
+                return marker;
+            } else {
+                return null;  
+            }
+        }
+    }).addTo(map);
+}
+
+    timeSlider(2016); 
+       
+
+    </script>
+</body>
+</html>
