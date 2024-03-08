@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table id =myTable>
+        <tr>
+            <th>Name</th>
+            <th>Birth</th>
+            <th>Birth Year</th>
+            <th>Death</th>
+            <th>Death Year</th>
+            <th>Image</th>
+            <th>Image Src</th>
+
+        </tr>
+    </table>
+    <script src="graveedits.js"></script>
+    <script src="pictures.js"></script>
+    <script>
+    var x = document.getElementById('myTable')
+        
+        for (var i =0; i <editedGraves.length; i++){
+        var myNewRow = document.createElement('tr');
+        var myNewCell1 = document.createElement('td');
+        var myNewCell2 = document.createElement('td');
+        var myNewCell3 = document.createElement('td');
+        var myNewCell4 = document.createElement('td');
+        var myNewCell5 = document.createElement('td');
+        var myNewCell6 = document.createElement('td');
+        var myNewCell7 = document.createElement('td');
+      
+        myNewCell1.innerHTML = editedGraves[i].name;
+        myNewCell2.innerHTML = editedGraves[i].birthDay;
+        myNewCell3.innerHTML = editedGraves[i].birthYear;
+        myNewCell4.innerHTML = editedGraves[i].deathDay;
+        myNewCell5.innerHTML = editedGraves[i].deathYear;
+        
+        if (picSource[i]) {
+        myNewCell6.innerHTML = `<img src="${picSource[i]}" alt="Image">`;
+    } else {
+        myNewCell6.innerHTML = 'No Image';
+    }
+        myNewCell7.innerHTML = picSource[i];
+      
+        myNewRow.append(myNewCell1);
+        myNewRow.append(myNewCell2);
+        myNewRow.append(myNewCell3);
+        myNewRow.append(myNewCell4);
+        myNewRow.append(myNewCell5);
+        myNewRow.append(myNewCell6);
+        myNewRow.append(myNewCell7);
+
+        x.append(myNewRow);
+    
+      
+        }
+  
+    
+</script>
+    
+</body>
+</html>
