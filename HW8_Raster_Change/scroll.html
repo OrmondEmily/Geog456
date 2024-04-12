@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    img {
+        position: absolute; 
+    }
+
+</style>
+
+<body>
+    <input type="range" min="0" max="1" value="0" step=".01" orient="vertical" oninput="myFunction(this.value)"/>
+    <h1>Princeville Through Time</h1>
+    <img id = 'P2004' src="./jpegs/2004Layout.png" style="width:400px">
+    <img id = 'P2020' src="./jpegs/2020Layout.png" style="width:400px">
+          
+    <script>
+        var last = document.getElementById('P2020')
+        function myFunction(value){
+            console.log(value)
+            last.style.opacity = value; 
+        }
+    </script>
+</body>
+</html>
