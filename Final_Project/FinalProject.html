@@ -172,7 +172,7 @@ var legend = L.control({position: 'bottomright'});
 
 legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info legend');
-    div.innerHTML += '<h4>Black Population <br>Percentage</h4>';
+    div.innerHTML += '<h5>Black Population <br>Percentage</h5>';
     for (var i = 0; i < legendColors.length; i++) {
         div.innerHTML +=
             '<i style="background:' + legendColors[i] + '"></i> ' +
