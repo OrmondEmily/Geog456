@@ -10,7 +10,6 @@
 integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
 crossorigin=""/>
 
-
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
 integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
 crossorigin=""></script>
@@ -29,62 +28,71 @@ crossorigin=""></script>
 <script src="./data/County2010USE.js"></script>
 <script src="./data/County2020.js"></script>
 <script src="./data/unitedstates.js"></script>
-
-
-
+<script src="./data/BlackTownPoints.js"></script>
 
 <style>
-     body {
+    body {
         background-color: rgb(171, 193, 212);
-     }
-      h3{
+    }
+
+    h3 {
         font-family: 'Poppins', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
         text-align: center;
         color: #17252d
-      }
+    }
 
-      h2{
+    h2 {
         font-family: "Prompt", Haettenschweiler, 'Arial Narrow Bold', sans-serif; 
         color: rgb(214, 241, 255);
-      }
-      h4{font-family: 'Poppins', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+    
+    h4 {font-family: 'Poppins', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
        color:aliceblue
-
-      }
-
+    }
 
     #mapContainer {
-    position: relative;
-    display: inline-block;
-    width: 800px; 
-    height: 600px;
+        position: relative;
+        display: inline-block;
+        width: 800px; 
+        height: 600px;
     }
-
-
 
     #buttonContainer {
-    position: absolute;
-    top: 270px; 
-    left: 10px;
+        position: absolute;
+        top: 270px; 
+        left: 10px;
     }
 
-    #mapi {height: 500px; 
-           width: 675px;
-           left: 23%}
-    
-    
-    
-    .buttonStyle{padding: 20px 45px;
-            font-size: 30px;
-            margin: 4px 2px;
-            width: 165px;
-            border-radius: 10px;
-            font-family: "Prompt", Haettenschweiler, 'Arial Narrow Bold', sans-serif; 
-            background-color: #457898; 
-            border: none;
-            display: block;
-            color: rgb(214, 241, 255);  
+    #mapi {
+        height: 500px; 
+        width: 675px;
+        left: 23%
+    }  
+      
+    .buttonStyle{
+        padding: 20px 45px;
+        font-size: 30px;
+        margin: 4px 2px;
+        width: 165px;
+        border-radius: 10px;
+        font-family: "Prompt", Haettenschweiler, 'Arial Narrow Bold', sans-serif; 
+        background-color: #457898; 
+        border: none;
+        display: block;
+        color: rgb(214, 241, 255);  
+    }
 
+    .buttonStyleClicked{
+        padding: 20px 45px;
+        font-size: 30px;
+        margin: 4px 2px;
+        width: 165px;
+        border-radius: 10px;
+        font-family: "Prompt", Haettenschweiler, 'Arial Narrow Bold', sans-serif; 
+        background-color: #04151f; 
+        border: none;
+        display: block;
+        color: rgb(214, 241, 255);  
     }
 
     #title{
@@ -95,20 +103,16 @@ crossorigin=""></script>
     }
 
     #notesContainer {
-    position: absolute;
-    top: 250px; /* Adjust this value as needed */
-    right: 5%;
-    width: 25%;
-    padding: 20px;
-    background-color:#457898;
-    border-radius: 10px;
-    z-index: 1000;
-}
-
-
-        
+        position: absolute;
+        top: 250px; /* Adjust this value as needed */
+        right: 5%;
+        width: 25%;
+        padding: 20px;
+        background-color:#457898;
+        border-radius: 10px;
+        z-index: 1000;
+    }      
 </style>
-
 
 <body>
     <h1 id = 'title'>Black Town Demographics by County</h1>
@@ -116,9 +120,25 @@ crossorigin=""></script>
     <div id = "mapContainer"> 
         <div id="mapi"></div>
     </div>
+    <div id = "buttonContainer">
+        <button id="button1980" class="buttonStyle" onclick="toggleButton(this); myFunction(county1980, 1980);">1980</button>
+<button id="button1989" class="buttonStyle" onclick="toggleButton(this); myFunction(county1989, 1989);">1989</button>
+<button id="button2000" class="buttonStyle" onclick="toggleButton(this); myFunction(county2000, 2000);">2000</button>
+<button id="button2010" class="buttonStyle" onclick="toggleButton(this); myFunction(county2010, 2010);">2010</button>
+<button id="button2020" class="buttonStyle" onclick="toggleButton(this); myFunction(county2020, 2020);">2020</button>
+
+    </div>
+    <div id = 'notesContainer'>
+        <h2>Notes</h2>
+        <h4>Years 1980 and 1989 were derived from the Intercensal County Estimates by Age, Sex, Race which was then manipulated in R to represent county population percentages. This may be the cause of missing values in the Counties. </h4>
+        <h2>Sources</h2>
+        <h4><a href="https://github.com/PublicaMundi/MappingAPI/blob/master/data/geojson/us-states.json">US GeoJSON Background</a></h4>
+        <h4><a href="https://www.census.gov/data/tables/time-series/demo/popest/1980s-county.html">1980-1989 Intercensal Data</a></h4>
+        <h4><a href="https://www.census.gov/ ">2000-2020 Census Data</a></h4>
+        <h4>Black Town Data Courtesy of Adrienne Hall and <a href ='https://carolinacartography.org/black-town-map/'>Carolina Cartography Collective</a></h4>
+    </div>
+    
     <script>
-
-
         var map = L.map('mapi').setView([40.00, -95], 3.5);
         L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
 	    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -126,12 +146,18 @@ crossorigin=""></script>
 	    maxZoom: 20
         }).addTo(map);
         
+        // Chat gpt helped me with the button 
+        function toggleButton(button) {
+        var buttons = document.getElementsByClassName("buttonStyle");
+        for (var i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("buttonStyleClicked");
+        }
+
+        button.classList.add("buttonStyleClicked");
+        }
         var currentLayer = null;
 
-        
-
-        L.geoJson(unitedStates, {fillColor: '#d5e4be', weight: .8, opacity:1, fillOpacity: 1, color: 'black'}).addTo(map);
-
+        L.geoJson(unitedStates, {fillColor: '#f7f7f7', weight: .8, opacity:1, fillOpacity: 1, color: 'black'}).addTo(map);
 
         function myFunction(geoJSONlayer, year) {
         if (currentLayer !== null) {
@@ -149,28 +175,46 @@ crossorigin=""></script>
                 };
             },
             onEachFeature: function(feature, layer) {
-//For popup
-    var propertyName = getPropertyByYear(year);
-    
-    var blackPopulationPercentage = feature.properties[propertyName];
-    
-    layer.bindPopup('<b>' + feature.properties.NAME + '</b><br>' +
-                    'Black Town: ' + feature.properties.Town_Name + '<br>' +
-                    'Year Established: ' + feature.properties.Year_Established + '<br>' +
-                    'Existing: ' + feature.properties.Existing + '<br>' +
-                    'Black Population Percentage: ' + blackPopulationPercentage + '%'
-                    );
-}
-        }).addTo(map);
+        // For popup CHAT GPT helped me 
+        var propertyName = getPropertyByYear(year);
+        var blackPopulationPercentage = feature.properties[propertyName];
+        var townName = feature.properties.Town_Name;
+        var geometry = JSON.stringify(feature.geometry);
+
+        // Check if the geometry has been encountered before
+        if (!window.geometryMap) {
+            window.geometryMap = {};
         }
 
+        // If geometry exists, append town name to the existing one
+        if (window.geometryMap.hasOwnProperty(geometry)) {
+            window.geometryMap[geometry].townNames.push(townName);
+        } else {
+            window.geometryMap[geometry] = {
+                percentage: blackPopulationPercentage,
+                townNames: [townName]
+            };
+        }
+
+        // Initialize popup content, toFixed helped make it so there isn't al lthe decimal points
+        var popupContent = '<b>' + feature.properties.NAME + ' County, ' + feature.properties.State_2 + '</b><br>' +
+                           'Black Towns: ' + window.geometryMap[geometry].townNames.join(', ') +
+                           '<br> Black Population ' + parseFloat(window.geometryMap[geometry].percentage).toFixed(2) + '%';
+
+        // Set popup content
+        layer.bindPopup(popupContent);
+    }
+}).addTo(map);
+        }
+
+
 // Chat gpt and leaflet helped me make the legend
-var legendColors = ['#d5e4be','#253494', '#2c7fb8', '#41b6c4','#a1dab4', '#ffffcc'];
-var percentages = ['13% (US Average)','> 80%', '60% - 80%', '40% - 60%', '20% - 40%', '< 20%'];
+    var legendColors = ['#e66101','#fdb863','#f7f7f7','#b2abd2','#5e3c99'];
+    var percentages = [ '0-6.5%', '< 6.5%-13%', '13% (US Average)', '< 13-43.5%', '< 43.5-100%'];
 
-var legend = L.control({position: 'bottomright'});
+    var legend = L.control({position: 'bottomright'});
 
-legend.onAdd = function (map) {
+    legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info legend');
     div.innerHTML += '<h5>Black Population <br>Percentage</h5>';
     for (var i = 0; i < legendColors.length; i++) {
@@ -179,19 +223,17 @@ legend.onAdd = function (map) {
             percentages[i] + '<br>';
     }
     return div;
-};
+    };
 
-// Add legend to the map
-legend.addTo(map);
+    // Add legend to the map
+    legend.addTo(map);
 
-var legendStyle = document.createElement('style');
-legendStyle.innerHTML = '.info.legend { background: white; padding: 5px; border-radius: 5px; }' +
+    var legendStyle = document.createElement('style');
+    legendStyle.innerHTML = '.info.legend { background: white; padding: 5px; border-radius: 5px; }' +
                         '.info.legend i { display: inline-block; width: 15px; height: 15px; margin-right: 6px; }';
-document.getElementsByTagName('head')[0].appendChild(legendStyle);
+    document.getElementsByTagName('head')[0].appendChild(legendStyle);
 
-
-
-// used chat gpt to help me wth this part
+    // used chat gpt to help me wth this part
         function getPropertyByYear(year) {
         switch (year) {
             case 1980:
@@ -210,35 +252,83 @@ document.getElementsByTagName('head')[0].appendChild(legendStyle);
     // colors from color brewer! and tutorial from leaflet
 
         function getColor(d) {
-        return d > 80  ? '#253494' :
-            d > 60  ?  '#2c7fb8':
-            d > 40  ? '#41b6c4' :
-            d > 20   ? '#a1dab4' :
-            d > 0   ?  '#ffffcc':
+        return d > 43.5  ? '#5e3c99' :
+            d > 13  ?  '#b2abd2':
+            d === 13  ? '#f7f7f7' :
+            d > 6.5   ? '#fdb863' :
+            d > 0   ?  '#e66101':
             'white';
         }
 
-    </script>
-<div id = "buttonContainer">
-    <button class = "buttonStyle" onclick="myFunction(county1980, 1980)">1980</button>
-    <button class = "buttonStyle" onclick="myFunction(county1989, 1989)">1989</button>
-    <button class = "buttonStyle" onclick="myFunction(county2000, 2000)">2000</button>
-    <button class = "buttonStyle" onclick="myFunction(county2010, 2010)">2010</button>
-    <button class = "buttonStyle" onclick="myFunction(county2020, 2020)">2020</button>
-</div>
-<div id = 'notesContainer'>
-    <h2>Notes</h2>
-    <h4>Years 1980 and 1989 were derived from the Intercensal County Estimates by Age, Sex, Race which was then manipulated in R to represent county population percentages. This may be the cause of missing values in the Counties. </h4>
-    <h2>Sources</h2>
-    <h4><a href="https://github.com/PublicaMundi/MappingAPI/blob/master/data/geojson/us-states.json">US GeoJSON Background</a></h4>
-    <h4><a href="https://www.census.gov/data/tables/time-series/demo/popest/1980s-county.html">1980-1989 Intercensal Data</a></h4>
-    <h4><a href="https://www.census.gov/ ">2000-2020 Census Data</a></h4>
-    <h4>Black Town Data Courtesy of Adrienne Hall and <a href ='https://carolinacartography.org/black-town-map/'>Carolina Cartography Collective</a></h4>
-</div>
-   
+    var yesTowns = L.layerGroup();
+    var noTowns = L.layerGroup();
+    var unsureTowns = L.layerGroup();
+
+    // Define circle options for existing, non-existing, and unsure towns
+    var existingCircleOptions = {
+    color: 'black', // Color for existing towns
+    fillColor: 'black',
+    fillOpacity: 1,
+    radius: 8000 // Adjust the radius of the circle as needed
+    };
+
+    var nonExistingCircleOptions = {
+    color: 'black', // Outline color for non-existing towns
+    fillColor: 'transparent', // Transparent fill color
+    fillOpacity: 0, // No fill opacity
+    radius: 8000, // Adjust the radius of the circle as needed
+    weight: .5
+    };
+
+    var unsureCircleOptions = {
+    color: 'black', // Color for unsure towns
+    fillColor: 'grey',
+    fillOpacity: 1,
+    radius: 8000,
+    weight: 1 
+    };
+
+    daPoints.features.forEach(function(feature) {
+    var existing = feature.properties.Existing;
+    var coordinates = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
+    var townName = feature.properties.Town_Name;
+    var yearEstablished = feature.properties.Year_Established;
+    var incorporatedStatus = feature.properties.Incorporated
+    var yearIncorporated = feature.properties.Year_Incorporated
+
+    var circleOptions;
+    if (existing === "Yes") {
+        circleOptions = existingCircleOptions;
+    } else if (existing === "No") {
+        circleOptions = nonExistingCircleOptions;
+    } else if (existing === "Unsure") {
+        circleOptions = unsureCircleOptions;
+    }
+    
+    var insidePopup = '<b> Town: ' + townName + '</b><br>' +
+                  'Year Established: ' + yearEstablished + '<br>' +
+                  'Existing: ' + existing + '<br>' +
+                  (incorporatedStatus === "Yes" ? 'Incorporated in ' + yearIncorporated : 'Not Incorporated');
+
+    var circle = L.circle(coordinates, circleOptions).bindPopup(insidePopup);
 
    
+    if (existing === "Yes") {
+        circle.addTo(yesTowns);
+    } else if (existing === "No") {
+        circle.addTo(noTowns);
+    } else if (existing === "Unsure") {
+        circle.addTo(unsureTowns);
+    }
+    });
 
+    var townPoints = {
+    "Existing Black Towns": yesTowns,
+    "Non-Existing Black Towns": noTowns,
+    "Unsure of Existence Black Towns": unsureTowns
+    };
 
+    var layerControl = L.control.layers(null, townPoints).addTo(map);
+</script>
 </body>
 </html>
