@@ -135,7 +135,7 @@ crossorigin=""></script>
         <div id="mapi"></div>
     </div>
     <div id = "buttonContainer">
-        <button id="button1980" class="buttonStyle" onclick="toggleButton(this); myFunction(county1980, 1980);">1980</button>
+        <button id="button1980" class="buttonStyle" onclick="toggleButton(this); myFunction(county1980, 1980);">1980</button> <!--add a new function fot state to change the style -->
 <button id="button1989" class="buttonStyle" onclick="toggleButton(this); myFunction(county1989, 1989);">1989</button>
 <button id="button2000" class="buttonStyle" onclick="toggleButton(this); myFunction(county2000, 2000);">2000</button>
 <button id="button2010" class="buttonStyle" onclick="toggleButton(this); myFunction(county2010, 2010);">2010</button>
@@ -165,6 +165,61 @@ crossorigin=""></script>
 	    maxZoom: 20
         }).addTo(map);
         
+        var stateTest =L.geoJSON(state2010, {
+        style: function(feature) {
+            var propertyName = "black_prct";
+            return {
+                fillColor: getColor(feature.properties[propertyName]),
+                weight: .25,
+                opacity: 1,
+                color: 'black',
+                fillOpacity: 1
+            };
+    
+        }});
+
+        var osm2 = new L.TileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+	    { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        centerFixed: [63, -150],
+		zoomLevelFixed: 2});
+    
+        var layerGroup = new L.layerGroup([stateTest, osm2])
+
+        // var miniMap = new L.Control.MiniMap(layerGroup,
+        //  {centerFixed: [19.694154544139877, -155.58880132574754],   // change this to be askala and hawaii
+        //     zoomLevelFixed: 6,
+        //     height: 150,
+        //     width: 150,
+        //     aimingRectOptions: {color: 'transparent'},
+        //     position:'bottomleft',
+        //     }).addTo(map);
+    var myHawaiiOptions = {centerFixed: [62.14300408073222, -145.81896265002598],   // change this to be askala and hawaii
+            zoomLevelFixed: 2,
+            height: 150,
+            width: 150,
+            aimingRectOptions: {color: 'transparent'},
+            position:'bottomleft',
+            };
+            // Reference to the existing minimap control
+var miniMapControl = L.control.minimap(layerGroup, myHawaiiOptions).addTo(map);
+
+// Function to change the layers of the minimap
+function changeMinimapLayers(aCurrentLayer) {
+    // Remove the existing minimap control from the map
+    map.removeControl(miniMapControl);
+    var a = aCurrentLayer
+    var newLayerGroup = new L.LayerGroup([a, osm2]);
+    // Create a new minimap control with the new layer group
+    miniMapControl = L.control.minimap(newLayerGroup, myHawaiiOptions).addTo(map);
+}
+
+// Example usage:
+// var newLayerGroup = new L.LayerGroup([newLayer1, newLayer2]);
+// changeMinimapLayers(newLayerGroup);
+
+    
+
+
         // Chat gpt helped me with the button 
         function toggleButton(button) {
         var buttons = document.getElementsByClassName("buttonStyle");
@@ -176,7 +231,7 @@ crossorigin=""></script>
         }
         var currentLayer = null;
 
-        function myFunction(geoJSONlayer, year) {
+    function myFunction(geoJSONlayer, year) {
     if (currentLayer !== null) {
         map.removeLayer(currentLayer);
     }
@@ -223,14 +278,21 @@ crossorigin=""></script>
 
             
             layer.bindPopup(popupContent);
+
+               
+
         }
-    }).addTo(map);
+    })
+    changeMinimapLayers(currentLayer) 
+    currentLayer.addTo(map)
 }
+
+
 
 
 // Chat gpt and leaflet helped me make the legend
     var legendColors = ['#e66101','#fdb863','#f7f7f7','#b2abd2','#5e3c99'];
-    var percentages = [ '0-6.5%', '< 6.5%-13%', '13% (US Average)', '< 13-56.5%', '< 56.5-100%'];
+    var percentages = [ '0-6%', '6%-13%', '13% (US Average)', '13-56%', '56-100%'];
 
     var legend = L.control({position: 'bottomright'});
 
@@ -272,10 +334,10 @@ crossorigin=""></script>
     // colors from color brewer! and tutorial from leaflet
 
         function getColor(d) {
-        return d > 56.5  ? '#5e3c99' :
+        return d > 56  ? '#5e3c99' :
             d > 13  ?  '#b2abd2':
-            d === 13  ? '#f7f7f7' :
-            d > 6.5   ? '#fdb863' :
+            d === 13  ? '#f7f7f7' : // Make this a darker grey easier to read
+            d > 6   ? '#fdb863' :
             d > 0   ?  '#e66101':
             'white';
         }
@@ -351,11 +413,32 @@ crossorigin=""></script>
     var layerControl = L.control.layers(null, townPoints).addTo(map);
 
 
-    var osm2 = new L.TileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-	    { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        centerFixed: [63, -150],
-		zoomLevelFixed: 2});
-    var miniMap = new L.Control.MiniMap(osm2).addTo(map);
+
+    
+
+
+    // // gus code
+    // var miniPolyBen = L.geoJSON(migrationData, {style: style});
+    //     var miniMarkersBen = L.geoJSON(points, {
+    //         pointToLayer: function (feature, latlng) {
+    //         return L.circleMarker(latlng, radius);
+    //     }
+    //         }).setStyle(radius);
+    //     //Group vectors and map in layer group
+    //     var miniLayersBen = new L.LayerGroup([miniPolyBen,miniMarkersBen,miniOsmBen]);
+    //     //Create map on bottom right
+    //     var miniMapBen = new L.Control.MiniMap(miniLayersBen, {
+    //         centerFixed: [51.4, 5.4623],
+    //         zoomLevelFixed: 6,
+    //         height: 300,
+    //         width: 300,
+    //         aimingRectOptions: {color: 'transparent'},
+    //         position:'bottomright',
+    //         }).addTo(map);
+
+
+
+    
 </script>
 
 
